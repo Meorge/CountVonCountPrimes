@@ -17,6 +17,9 @@ for t in tweets:
     distilled.append({
         'date': t.date,
         'number': number,
+        'likes': t.likeCount,
+        'replies': t.replyCount,
+        'retweets': t.retweetCount,
         'hasLaugh': hasLaugh
     })
     if hasLaugh: print(number)
