@@ -73,7 +73,7 @@ def retweet_new_primes():
         logging.info(f'Found a non-retweeted prime, {value} - attempting to retweet')
         try:
             laugh = " Ah ah ah!" if random() > 0.5 else ""
-            response = client.create_tweet(text=f"That's prime number {get_prime_index(value)}.{laugh}", quote_tweet_id=t.id)
+            response = client.create_tweet(text=f"That's prime number {get_prime_index(value)}!{laugh}", quote_tweet_id=t.id)
             logging.info(response)
             retweeted_ids.append(t.id)
             retweeted_anything = True
