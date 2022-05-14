@@ -1,9 +1,11 @@
 from random import randint
 from pickle import load
 
-prime_list = load(open('primes', 'rb'))
+
+
 
 def get_prime_index(n: int) -> int:
+    prime_list = load(open('primes', 'rb'))
     return prime_list.index(n) + 1
 
 def is_prime(n: int) -> bool:
