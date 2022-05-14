@@ -1,11 +1,13 @@
+from random import random
 from traceback import print_exc
 from typing import List
 from dotenv import load_dotenv
 from os import environ
+from requests import ReadTimeout
 import tweepy
 from pickle import load, dump
 from parse_number import parse_number
-from calculate_primality import is_prime
+from calculate_primality import is_prime, get_prime_index
 import logging
 from time import sleep
 
@@ -44,10 +46,11 @@ def retweet_new_primes():
 
     try:
         response = client.search_recent_tweets(
-            "from:CountVonCount"
+            "from:CountVonCount",
+            max_results=20
         )
-    except:
-        logging.error("There was probably a timeout or something idk")
+    except ReadTimeout:
+        logging.error("Looks like there was a timeout")
         print_exc()
         return
         
@@ -69,7 +72,8 @@ def retweet_new_primes():
 
         logging.info(f'Found a non-retweeted prime, {value} - attempting to retweet')
         try:
-            response = client.retweet(t.id)
+            laugh = " Ah ah ah!" if random() > 0.5 else ""
+            response = client.create_tweet(text=f"That's prime number {get_prime_index(value)}.{laugh}", quote_tweet_id=t.id)
             logging.info(response)
             retweeted_ids.append(t.id)
             retweeted_anything = True
