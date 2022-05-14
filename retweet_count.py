@@ -41,9 +41,16 @@ logging.info(f'retweeted_ids has {len(retweeted_ids)} items')
 
 def retweet_new_primes():
     logging.info('Looking for new primes to retweet...')
-    response = client.search_recent_tweets(
-        "from:CountVonCount"
-    )
+
+    try:
+        response = client.search_recent_tweets(
+            "from:CountVonCount"
+        )
+    except:
+        logging.error("There was probably a timeout or something idk")
+        print_exc()
+        return
+        
     tweets = response.data
     
     retweeted_anything = False
